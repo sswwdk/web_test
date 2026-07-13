@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>구름이와 가을이의 일상</title>
+    <!-- 깔끔한 폰트 (Pretendard) 불러오기 -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+    
+    <style>
+        /* 기본 설정 및 컬러 팔레트 */
+        :root {
+            --color-primary: #FFF5C2; /* 파스텔 옐로우 */
+            --color-primary-hover: #FFEBA3;
+            --color-bg-white: #FFFFFF;
+            --color-bg-gray: #F9F9F9;
+            --color-text-main: #333333;
+            --color-text-sub: #666666;
+            --color-border: #EEEEEE;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Pretendard', sans-serif;
+            color: var(--color-text-main);
+            background-color: var(--color-bg-white);
+            line-height: 1.6;
+            word-break: keep-all;
+        }
+
+        /* 공통 레이아웃 */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        section {
+            padding: 100px 0;
+        }
+
+        /* 1. 히어로 섹션 */
+        .hero {
+            background-color: var(--color-primary);
+            text-align: center;
+            padding: 140px 24px;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--color-text-sub);
+        }
+
+        /* 2. 소개 (프로필) 섹션 */
+        .intro {
+            background-color: var(--color-bg-white);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 48px;
+        }
+
+        .profile-grid {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+        }
+
+        .profile-card {
+            background-color: var(--color-bg-gray);
+            border-radius: 24px;
+            padding: 40px 32px;
+            flex: 1;
+            text-align: center;
+            border: 1px solid var(--color-border);
+        }
+
+        .emoji-avatar {
+            font-size: 4rem;
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+
+        .profile-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+        }
+
+        .profile-card p {
+            color: var(--color-text-sub);
+        }
+
+        /* 3. 강점 카드 (매력 포인트) 섹션 */
+        .strengths {
+            background-color: var(--color-bg-gray);
+        }
+
+        /* 1열 세로 배치로 변경 */
+        .card-grid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 700px; /* 카드가 너무 넓어지지 않게 제한 */
+            background-color: var(--color-bg-white);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            transition: transform 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
+        }
+
+        .card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+        }
+
+        .card p {
+            color: var(--color-text-sub);
+            font-size: 0.95rem;
+        }
+
+        /* 4. CTA (방명록) 섹션 */
+        .cta {
+            background-color: var(--color-bg-white);
+            text-align: center;
+        }
+
+        .cta-box {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: var(--color-bg-gray);
+            padding: 48px 32px;
+            border-radius: 24px;
+            border: 1px solid var(--color-border);
+        }
+
+        .cta-box h2 {
+            font-size: 1.75rem;
+            margin-bottom: 16px;
+        }
+
+        .cta-box p {
+            color: var(--color-text-sub);
+            margin-bottom: 32px;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .input-group input {
+            flex: 1;
+            padding: 16px;
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: 'Pretendard', sans-serif;
+            outline: none;
+        }
+
+        .input-group input:focus {
+            border-color: #D4C99A;
+        }
+
+        .btn {
+            background-color: var(--color-primary);
+            color: var(--color-text-main);
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-family: 'Pretendard', sans-serif;
+            white-space: nowrap;
+        }
+
+        .btn:hover {
+            background-color: var(--color-primary-hover);
+        }
+
+        /* 방명록 메시지 표시 영역 */
+        #message-area {
+            margin-top: 24px;
+            text-align: left;
+        }
+
+        .guest-message {
+            background-color: var(--color-bg-white);
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            border: 1px solid var(--color-border);
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 슬라이더 관련 스타일 */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1; /* 가로로 길었던 비율을 1:1 정사각형으로 키움 */
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            background-color: transparent; /* 회색 배경을 투명하게 변경 */
+        }
+        .slider-track {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.3s ease-in-out;
+        }
+        .slider-track img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* 이 부분을 cover에서 contain으로 수정했습니다 */
+            flex-shrink: 0;
+            background-color: transparent; /* 회색 배경 투명하게 변경 */
+        }
+        .slider-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.7);
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: background 0.2s;
+        }
+        .slider-btn:hover {
+            background: rgba(255, 255, 255, 1);
+        }
+        .slider-btn.prev { left: 8px; }
+        .slider-btn.next { right: 8px; }
+
+        /* 이미지 확대 모달 (Lightbox) 스타일 */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active {
+            opacity: 1;
+        }
+        #modal-image {
+            max-width: 90vw;
+            max-height: 90vh;
+            border-radius: 12px;
+            object-fit: contain;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #fff;
+            font-size: 40px;
+            cursor: pointer;
+            z-index: 10000;
+        }
+        /* 클릭 가능한 이미지 효과 */
+        .clickable-img {
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        .clickable-img:hover {
+            opacity: 0.85;
+            transform: scale(1.02);
+        }
+
+        /* 5. 푸터 */
+        footer {
+            text-align: center;
+            padding: 40px 24px;
+            background-color: var(--color-bg-white);
+            color: #999;
+            font-size: 0.9rem;
+            border-top: 1px solid var(--color-border);
+        }
+
+        /* 반응형 모바일 처리 */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+            .hero {
+                padding: 100px 24px;
+                border-bottom-left-radius: 24px;
+                border-bottom-right-radius: 24px;
+            }
+            section {
+                padding: 64px 0;
+            }
+            .profile-grid {
+                flex-direction: column;
+            }
+            .input-group {
+                flex-direction: column;
+            }
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. 히어로 섹션 -->
+    <header class="hero">
+        <div class="container">
+            <h1>사고뭉치 두 강아지,<br>구름이와 가을이의 우당탕탕 일상 기록!</h1>
+            <p>대전 SSAFY 1반분들 환영합니다 🐾</p>
+        </div>
+    </header>
+
+    <!-- 2. 소개 섹션 -->
+    <section class="intro">
+        <div class="container">
+            <h2 class="section-title">☁️ 구름 & 가을 🍂</h2>
+            <div class="profile-grid">
+                <div class="profile-card">
+                    <div id="gureum-slider" class="slider-container">
+                        <!-- 자바스크립트로 이미지가 자동으로 들어갑니다 -->
+                    </div>
+                    <h3>첫째 오빠 구름이</h3>
+                    <p>나이는 가을이보다 2살 많습니다. 하지만 여동생에게 언제나 져주는 착하고 듬직한 오빠입니다.</p>
+                </div>
+                <div class="profile-card">
+                    <div id="gaeul-slider" class="slider-container">
+                        <!-- 자바스크립트로 이미지가 자동으로 들어갑니다 -->
+                    </div>
+                    <h3>둘째 여동생 가을이</h3>
+                    <p>에너지가 넘치는 막내입니다. 구름이 오빠를 이겨 먹는 우리 집의 실질적인 서열 1위입니다.</p>
+                </div>
+            </div>
+            
+            <div class="profile-card" style="margin-top: 24px; width: 100%;">
+                <!-- 가로로 긴 비율로 설정하여 투샷에 어울리게 맞춤 -->
+                <div id="both-slider" class="slider-container" style="aspect-ratio: 16 / 9; max-height: 500px;">
+                    <!-- 자바스크립트로 이미지가 자동으로 들어갑니다 -->
+                </div>
+                <h3>환상의 콤비, 구름 & 가을 투샷 📸</h3>
+                <p>함께 있을 때 귀여움이 두 배가 되는 구름이와 가을이의 모습입니다.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. 강점 카드 (매력 포인트) 섹션 -->
+    <section class="strengths">
+        <div class="container">
+            <h2 class="section-title">핵심 매력 포인트 4가지</h2>
+            <div class="card-grid">
+                <div class="card">
+                    <!-- 아기 때 사진 2장 크게 나란히 배치 (가운데 정렬) -->
+                    <div style="display: flex; gap: 12px; justify-content: center; margin-bottom: 24px; max-width: 500px; margin-left: auto; margin-right: auto;">
+                        <img src="images/babygroom.jpg" class="clickable-img" onclick="openModal(this.src)" alt="아기 구름이" style="width: calc(50% - 6px); border-radius: 12px; object-fit: cover; aspect-ratio: 1/1; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                        <img src="images/babygaeul.jpg" class="clickable-img" onclick="openModal(this.src)" alt="아기 가을이" style="width: calc(50% - 6px); border-radius: 12px; object-fit: cover; aspect-ratio: 1/1; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                    </div>
+                    <h3>꼬물이 시절 못생김</h3>
+                    <p>지금은 천사 같지만, 꼬물거리는 아기 시절에는 털도 삐죽삐죽하고 어딘가 억울해 보이는 꼬질한 매력이 있었습니다.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">👑</div>
+                    <h3>서열 역전</h3>
+                    <p>구름이가 2살이나 오빠지만 막내 여동생 가을이에게 늘 져주며 잡혀 지냅니다. 이 엉뚱한 관계가 보는 재미를 더합니다.</p>
+                </div>
+
+                <div class="card">
+                    <div style="display: flex; gap: 12px; justify-content: center; margin-bottom: 24px; max-width: 500px; margin-left: auto; margin-right: auto;">
+                        <img src="images/groomtoy.jpg" class="clickable-img" onclick="openModal(this.src)" alt="구름이 장난감" style="width: 100%; border-radius: 12px; object-fit: cover; aspect-ratio: 1/1; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                        <img src="images/gaueltoy.jpg" class="clickable-img" onclick="openModal(this.src)" alt="구름이 장난감" style="width: 100%; border-radius: 12px; object-fit: cover; aspect-ratio: 1/1; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                    </div>
+                    <h3>구름이의 슬리퍼 사랑/ 가을이의 인형 사랑</h3>
+                    <p>구름이는 슬리퍼를 매우 좋아합니다. 모든 슬리퍼를 너무 좋아해서 결국 아주 작은 아기 전용 슬리퍼를 사줬습니다!</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-icon">✨</div>
+                    <h3>4. 존재 자체가 힐링</h3>
+                    <p>두 마리 모두 각자의 매력으로 무척 귀엽습니다. 바라만 보아도 일상의 피로가 싹 풀리는 기분입니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. CTA (소통 공간) 섹션 -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-box">
+                <h2>SSAFY 동기님들, 방명록 남겨주세요! 👋</h2>
+                <p>구름이와 가을이에게 하고 싶은 말을 자유롭게 적어주세요.</p>
+                
+                <div class="input-group">
+                    <input type="text" id="guest-input" placeholder="여기에 메시지를 입력하세요" onkeypress="handleKeyPress(event)">
+                    <button class="btn" onclick="addMessage()">등록하기</button>
+                </div>
+
+                <!-- 방명록 메시지가 추가되는 영역 -->
+                <div id="message-area"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. 푸터 -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2026 구름 & 가을. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- 이미지 확대 모달 -->
+    <div id="image-modal" class="modal-overlay" onclick="closeModal()">
+        <span class="close-btn">&times;</span>
+        <!-- 사진을 클릭했을 때 모달이 닫히지 않도록 이벤트 전파 막기 -->
+        <img id="modal-image" src="" alt="확대된 이미지" onclick="event.stopPropagation()">
+    </div>
+
+    <!-- 자바스크립트 로직 -->
+    <script>
+        // ===== 이미지 슬라이더 설정 =====
+        // 💡 각 폴더에 들어있는 사진의 '최대 개수'만 적어주시면 됩니다!
+        const groomImageCount = 7; // 구름이 사진 개수 (예: 5장)
+        const gaeulImageCount = 10; // 가을이 사진 개수 (예: 5장)
+        const bothImageCount = 11;  // 투샷 사진 개수 (예: 5장)
+
+        // 확장자가 다를 경우 (예: png 등) 여기만 수정하세요.
+        const fileExtension = ".jpg"; 
+
+        const gureumImages = [];
+        const gaeulImages = [];
+        const bothImages = [];
+
+        // 반복문을 통해 'images/groom (1).jpg' 형태의 텍스트를 자동으로 배열에 채워 넣습니다.
+        for(let i=1; i<=groomImageCount; i++) {
+            gureumImages.push(`images/groom (${i})${fileExtension}`);
+        }
+        for(let i=1; i<=gaeulImageCount; i++) {
+            gaeulImages.push(`images/gaeul (${i})${fileExtension}`);
+        }
+        for(let i=1; i<=bothImageCount; i++) {
+            bothImages.push(`images/both (${i})${fileExtension}`);
+        }
+
+        // 슬라이더 자동 생성 함수
+        function createSlider(sliderId, images) {
+            const container = document.getElementById(sliderId);
+            if (!container || images.length === 0) return;
+
+            let currentIndex = 0;
+
+            // 트랙(이미지가 가로로 나열되는 공간) 생성
+            const track = document.createElement('div');
+            track.className = 'slider-track';
+            
+            images.forEach(src => {
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = '강아지 이미지';
+                // 슬라이더 이미지도 클릭 시 확대되도록 설정
+                img.className = 'clickable-img';
+                img.onclick = function() {
+                    openModal(this.src);
+                };
+                // 이미지 로딩 실패 시 표시할 대체 화면
+                img.onerror = function() {
+                    this.src = 'https://placehold.co/400x300/CCCCCC/666666?text=Image+Not+Found';
+                };
+                track.appendChild(img);
+            });
+
+            // 좌우 이동 버튼 생성
+            const prevBtn = document.createElement('button');
+            prevBtn.className = 'slider-btn prev';
+            prevBtn.innerHTML = '&#10094;'; 
+            
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'slider-btn next';
+            nextBtn.innerHTML = '&#10095;';
+
+            // 슬라이드 이동 로직
+            function updateSlider() {
+                track.style.transform = `translateX(-${currentIndex * 100}%)`;
+            }
+
+            prevBtn.onclick = () => {
+                currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;
+                updateSlider();
+            };
+
+            nextBtn.onclick = () => {
+                currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0;
+                updateSlider();
+            };
+
+            // 화면에 반영
+            container.appendChild(track);
+            container.appendChild(prevBtn);
+            container.appendChild(nextBtn);
+        }
+
+        // 페이지가 열리면 슬라이더를 세팅합니다.
+        window.onload = function() {
+            createSlider('gureum-slider', gureumImages);
+            createSlider('gaeul-slider', gaeulImages);
+            createSlider('both-slider', bothImages); // 투샷 슬라이더 추가
+        };
+
+        // ===== 이미지 확대 모달 기능 =====
+        function openModal(imageSrc) {
+            const modal = document.getElementById('image-modal');
+            const modalImg = document.getElementById('modal-image');
+            modalImg.src = imageSrc;
+            modal.style.display = 'flex';
+            // 약간의 딜레이를 주어 transition(서서히 나타나는 효과)이 적용되게 함
+            setTimeout(() => {
+                modal.classList.add('active');
+            }, 10);
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('image-modal');
+            modal.classList.remove('active');
+            // transition이 끝난 후 display none 처리
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 300);
+        }
+
+        // ===== 기존 방명록 기능 =====
+        // 방명록 추가 기능
+        function addMessage() {
+            const inputElement = document.getElementById('guest-input');
+            const messageArea = document.getElementById('message-area');
+            const text = inputElement.value.trim();
+
+            if (text === "") {
+                return; // 빈 칸이면 아무 동작도 하지 않음 (경고창 생략)
+            }
+
+            // 새로운 메시지 요소 생성
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'guest-message';
+            
+            // 날짜 포맷 (예: 2026. 7. 13.)
+            const today = new Date();
+            const dateString = today.toLocaleDateString('ko-KR');
+
+            messageDiv.innerHTML = `<strong>익명의 친구</strong> <span style="color:#999; font-size:0.85rem; margin-left:8px;">${dateString}</span><br><p style="margin-top:8px;">${text}</p>`;
+
+            // 영역 맨 위에 추가
+            messageArea.insertBefore(messageDiv, messageArea.firstChild);
+            
+            // 입력창 초기화
+            inputElement.value = "";
+        }
+
+        // 엔터키 입력 시 방명록 추가되도록 처리
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                addMessage();
+            }
+        }
+    </script>
+
+</body>
+</html>
