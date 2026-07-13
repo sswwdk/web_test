@@ -8,15 +8,26 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     
     <style>
-        /* 기본 설정 및 컬러 팔레트 */
-        :root {
-            --color-primary: #FFF5C2; /* 파스텔 옐로우 */
-            --color-primary-hover: #FFEBA3;
+        /* 기본 설정 (구름 모드 - 시원한 파란색 느낌) */
+        :root, [data-theme="gureum"] {
+            --color-primary: #D6EAF8; /* 시원한 파스텔 블루 */
+            --color-primary-hover: #AED6F1;
             --color-bg-white: #FFFFFF;
-            --color-bg-gray: #F9F9F9;
-            --color-text-main: #333333;
-            --color-text-sub: #666666;
-            --color-border: #EEEEEE;
+            --color-bg-gray: #F4F9FD;
+            --color-text-main: #2C3E50; /* 조금 짙은 네이비 톤 */
+            --color-text-sub: #5D6D7E;
+            --color-border: #EBF5FB;
+        }
+
+        /* 다크 모드 (가을 모드 - 갈색, 딥한 느낌) */
+        [data-theme="gaeul"] {
+            --color-primary: #A67B5B; /* 딥 브라운 */
+            --color-primary-hover: #8B6346;
+            --color-bg-white: #2C221E; /* 짙은 다크 브라운 배경 */
+            --color-bg-gray: #3A2D27; /* 카드 등 배경 */
+            --color-text-main: #F4EBE1; /* 가독성을 위한 크림색 텍스트 */
+            --color-text-sub: #C8B9AD;
+            --color-border: #524036;
         }
 
         * {
@@ -25,12 +36,41 @@
             padding: 0;
         }
 
+        /* 요소별 색상 전환을 부드럽게 해주는 트랜지션 적용 */
+        body, .hero, .intro, .strengths, .cta, .card, .profile-card, .cta-box, footer, .guest-message, input, .btn {
+            transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease;
+        }
+
         body {
             font-family: 'Pretendard', sans-serif;
             color: var(--color-text-main);
             background-color: var(--color-bg-white);
             line-height: 1.6;
             word-break: keep-all;
+        }
+
+        /* 테마 변경 버튼 스타일 */
+        .theme-toggle-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background-color: var(--color-primary);
+            color: var(--color-text-main);
+            border: 2px solid var(--color-border);
+            padding: 12px 20px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            font-family: 'Pretendard', sans-serif;
+        }
+
+        .theme-toggle-btn:hover {
+            transform: scale(1.05);
+            background-color: var(--color-primary-hover);
         }
 
         /* 공통 레이아웃 */
@@ -112,7 +152,7 @@
             background-color: var(--color-bg-gray);
         }
 
-        /* 1열 세로 배치로 변경 */
+        /* 1열 세로 배치 */
         .card-grid {
             display: flex;
             flex-direction: column;
@@ -122,13 +162,13 @@
 
         .card {
             width: 100%;
-            max-width: 700px; /* 카드가 너무 넓어지지 않게 제한 */
+            max-width: 700px;
             background-color: var(--color-bg-white);
             border-radius: 24px;
             padding: 40px;
             text-align: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-            transition: transform 0.2s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease, background-color 0.4s ease, color 0.4s ease;
         }
 
         .card:hover {
@@ -184,6 +224,8 @@
         .input-group input {
             flex: 1;
             padding: 16px;
+            background-color: var(--color-bg-white);
+            color: var(--color-text-main);
             border: 1px solid var(--color-border);
             border-radius: 12px;
             font-size: 1rem;
@@ -191,8 +233,12 @@
             outline: none;
         }
 
+        .input-group input::placeholder {
+            color: var(--color-text-sub);
+        }
+
         .input-group input:focus {
-            border-color: #D4C99A;
+            border-color: var(--color-primary-hover);
         }
 
         .btn {
@@ -204,13 +250,14 @@
             font-size: 1rem;
             font-weight: 700;
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: background-color 0.2s, transform 0.2s;
             font-family: 'Pretendard', sans-serif;
             white-space: nowrap;
         }
 
         .btn:hover {
             background-color: var(--color-primary-hover);
+            transform: scale(1.02);
         }
 
         /* 방명록 메시지 표시 영역 */
@@ -237,11 +284,11 @@
         .slider-container {
             position: relative;
             width: 100%;
-            aspect-ratio: 1 / 1; /* 가로로 길었던 비율을 1:1 정사각형으로 키움 */
+            aspect-ratio: 1 / 1;
             border-radius: 16px;
             overflow: hidden;
             margin-bottom: 20px;
-            background-color: transparent; /* 회색 배경을 투명하게 변경 */
+            background-color: transparent;
         }
         .slider-track {
             display: flex;
@@ -252,9 +299,9 @@
         .slider-track img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* 이 부분을 cover에서 contain으로 수정했습니다 */
+            object-fit: contain;
             flex-shrink: 0;
-            background-color: transparent; /* 회색 배경 투명하게 변경 */
+            background-color: transparent;
         }
         .slider-btn {
             position: absolute;
@@ -272,6 +319,7 @@
             justify-content: center;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
             transition: background 0.2s;
+            color: #333; /* 버튼 내부 아이콘은 항상 어둡게 */
         }
         .slider-btn:hover {
             background: rgba(255, 255, 255, 1);
@@ -326,15 +374,22 @@
             text-align: center;
             padding: 40px 24px;
             background-color: var(--color-bg-white);
-            color: #999;
+            color: var(--color-text-sub);
             font-size: 0.9rem;
             border-top: 1px solid var(--color-border);
         }
 
         /* 반응형 모바일 처리 */
         @media (max-width: 768px) {
+            .theme-toggle-btn {
+                top: 10px;
+                right: 10px;
+                padding: 8px 16px;
+                font-size: 0.9rem;
+            }
             .hero h1 {
                 font-size: 1.75rem;
+                margin-top: 20px; /* 버튼과 겹치지 않게 여백 추가 */
             }
             .hero {
                 padding: 100px 24px;
@@ -356,7 +411,10 @@
         }
     </style>
 </head>
-<body>
+<body data-theme="gureum"> <!-- 기본값: 구름 모드 -->
+
+    <!-- 상단 테마 토글 버튼 -->
+    <button id="theme-toggle" class="theme-toggle-btn" onclick="toggleTheme()">🍂 가을 모드로 보기</button>
 
     <!-- 1. 히어로 섹션 -->
     <header class="hero">
@@ -421,8 +479,8 @@
 
                 <div class="card">
                     <div style="display: flex; gap: 12px; justify-content: center; margin-bottom: 24px; max-width: 500px; margin-left: auto; margin-right: auto;">
-                        <img src="images/groomtoy.jpg" class="clickable-img" onclick="openModal(this.src)" alt="구름이 장난감" style="width: 100%; border-radius: 12px; object-fit: cover; aspect-ratio: 1/1; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-                        <img src="images/gaueltoy.jpg" class="clickable-img" onclick="openModal(this.src)" alt="구름이 장난감" style="width: 100%; border-radius: 12px; object-fit: cover; aspect-ratio: 1/1; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                        <img src="images/groomtoy.jpg" class="clickable-img" onclick="openModal(this.src)" alt="구름이 장난감" style="width: calc(50% - 6px); border-radius: 12px; object-fit: cover; aspect-ratio: 1/1; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                        <img src="images/gaueltoy.jpg" class="clickable-img" onclick="openModal(this.src)" alt="가을이 장난감" style="width: calc(50% - 6px); border-radius: 12px; object-fit: cover; aspect-ratio: 1/1; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
                     </div>
                     <h3>구름이의 슬리퍼 사랑/ 가을이의 인형 사랑</h3>
                     <p>구름이는 슬리퍼를 매우 좋아합니다. 모든 슬리퍼를 너무 좋아해서 결국 아주 작은 아기 전용 슬리퍼를 사줬습니다!</p>
@@ -471,20 +529,33 @@
 
     <!-- 자바스크립트 로직 -->
     <script>
-        // ===== 이미지 슬라이더 설정 =====
-        // 💡 각 폴더에 들어있는 사진의 '최대 개수'만 적어주시면 됩니다!
-        const groomImageCount = 7; // 구름이 사진 개수 (예: 5장)
-        const gaeulImageCount = 10; // 가을이 사진 개수 (예: 5장)
-        const bothImageCount = 11;  // 투샷 사진 개수 (예: 5장)
+        // ===== 테마 토글 로직 =====
+        function toggleTheme() {
+            const body = document.body;
+            const toggleBtn = document.getElementById('theme-toggle');
+            const currentTheme = body.getAttribute('data-theme');
 
-        // 확장자가 다를 경우 (예: png 등) 여기만 수정하세요.
+            if (currentTheme === 'gaeul') {
+                // 가을 모드 -> 구름 모드
+                body.setAttribute('data-theme', 'gureum');
+                toggleBtn.innerHTML = '🍂 가을 모드로 보기';
+            } else {
+                // 구름 모드 -> 가을 모드
+                body.setAttribute('data-theme', 'gaeul');
+                toggleBtn.innerHTML = '☁️ 구름 모드로 보기';
+            }
+        }
+
+        // ===== 이미지 슬라이더 설정 =====
+        const groomImageCount = 7;
+        const gaeulImageCount = 10;
+        const bothImageCount = 11;
         const fileExtension = ".jpg"; 
 
         const gureumImages = [];
         const gaeulImages = [];
         const bothImages = [];
 
-        // 반복문을 통해 'images/groom (1).jpg' 형태의 텍스트를 자동으로 배열에 채워 넣습니다.
         for(let i=1; i<=groomImageCount; i++) {
             gureumImages.push(`images/groom (${i})${fileExtension}`);
         }
@@ -502,7 +573,6 @@
 
             let currentIndex = 0;
 
-            // 트랙(이미지가 가로로 나열되는 공간) 생성
             const track = document.createElement('div');
             track.className = 'slider-track';
             
@@ -510,19 +580,16 @@
                 const img = document.createElement('img');
                 img.src = src;
                 img.alt = '강아지 이미지';
-                // 슬라이더 이미지도 클릭 시 확대되도록 설정
                 img.className = 'clickable-img';
                 img.onclick = function() {
                     openModal(this.src);
                 };
-                // 이미지 로딩 실패 시 표시할 대체 화면
                 img.onerror = function() {
                     this.src = 'https://placehold.co/400x300/CCCCCC/666666?text=Image+Not+Found';
                 };
                 track.appendChild(img);
             });
 
-            // 좌우 이동 버튼 생성
             const prevBtn = document.createElement('button');
             prevBtn.className = 'slider-btn prev';
             prevBtn.innerHTML = '&#10094;'; 
@@ -531,7 +598,6 @@
             nextBtn.className = 'slider-btn next';
             nextBtn.innerHTML = '&#10095;';
 
-            // 슬라이드 이동 로직
             function updateSlider() {
                 track.style.transform = `translateX(-${currentIndex * 100}%)`;
             }
@@ -546,17 +612,15 @@
                 updateSlider();
             };
 
-            // 화면에 반영
             container.appendChild(track);
             container.appendChild(prevBtn);
             container.appendChild(nextBtn);
         }
 
-        // 페이지가 열리면 슬라이더를 세팅합니다.
         window.onload = function() {
             createSlider('gureum-slider', gureumImages);
             createSlider('gaeul-slider', gaeulImages);
-            createSlider('both-slider', bothImages); // 투샷 슬라이더 추가
+            createSlider('both-slider', bothImages);
         };
 
         // ===== 이미지 확대 모달 기능 =====
@@ -565,7 +629,6 @@
             const modalImg = document.getElementById('modal-image');
             modalImg.src = imageSrc;
             modal.style.display = 'flex';
-            // 약간의 딜레이를 주어 transition(서서히 나타나는 효과)이 적용되게 함
             setTimeout(() => {
                 modal.classList.add('active');
             }, 10);
@@ -574,41 +637,35 @@
         function closeModal() {
             const modal = document.getElementById('image-modal');
             modal.classList.remove('active');
-            // transition이 끝난 후 display none 처리
             setTimeout(() => {
                 modal.style.display = 'none';
             }, 300);
         }
 
         // ===== 기존 방명록 기능 =====
-        // 방명록 추가 기능
         function addMessage() {
             const inputElement = document.getElementById('guest-input');
             const messageArea = document.getElementById('message-area');
             const text = inputElement.value.trim();
 
             if (text === "") {
-                return; // 빈 칸이면 아무 동작도 하지 않음 (경고창 생략)
+                return; 
             }
 
-            // 새로운 메시지 요소 생성
             const messageDiv = document.createElement('div');
             messageDiv.className = 'guest-message';
             
-            // 날짜 포맷 (예: 2026. 7. 13.)
             const today = new Date();
             const dateString = today.toLocaleDateString('ko-KR');
 
-            messageDiv.innerHTML = `<strong>익명의 친구</strong> <span style="color:#999; font-size:0.85rem; margin-left:8px;">${dateString}</span><br><p style="margin-top:8px;">${text}</p>`;
+            // 색상이 테마에 따라 변할 수 있도록 인라인 스타일 중 글자색을 약간 수정했습니다
+            messageDiv.innerHTML = `<strong>익명의 친구</strong> <span style="font-size:0.85rem; margin-left:8px; opacity: 0.7;">${dateString}</span><br><p style="margin-top:8px;">${text}</p>`;
 
-            // 영역 맨 위에 추가
             messageArea.insertBefore(messageDiv, messageArea.firstChild);
             
-            // 입력창 초기화
             inputElement.value = "";
         }
 
-        // 엔터키 입력 시 방명록 추가되도록 처리
         function handleKeyPress(event) {
             if (event.key === 'Enter') {
                 addMessage();
