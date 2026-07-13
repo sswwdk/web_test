@@ -47,6 +47,13 @@
             background-color: var(--color-bg-white);
             line-height: 1.6;
             word-break: keep-all;
+            /* 강아지 발바닥 커서 적용 */
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="%235D6D7E"><path d="M12 2C10.34 2 9 3.34 9 5C9 6.66 10.34 8 12 8C13.66 8 15 6.66 15 5C15 3.34 13.66 2 12 2ZM7 9C5.34 9 4 10.34 4 12C4 13.66 5.34 15 7 15C8.66 15 10 13.66 10 12C10 10.34 8.66 9 7 9ZM17 9C15.34 9 14 10.34 14 12C14 13.66 15.34 15 17 15C18.66 15 20 13.66 20 12C20 10.34 18.66 9 17 9ZM12 14C9.24 14 7 16.24 7 19C7 21.21 8.79 24 11 24H13C15.21 24 17 21.21 17 19C17 16.24 14.76 14 12 14Z"/></svg>') 12 12, auto;
+        }
+
+        /* 클릭 가능한 요소에 진한 발바닥 커서 적용 */
+        .theme-toggle-btn, .card, .clickable-img, .btn, .slider-btn, .close-btn, .slider-dot {
+            cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="%232C3E50"><path d="M12 2C10.34 2 9 3.34 9 5C9 6.66 10.34 8 12 8C13.66 8 15 6.66 15 5C15 3.34 13.66 2 12 2ZM7 9C5.34 9 4 10.34 4 12C4 13.66 5.34 15 7 15C8.66 15 10 13.66 10 12C10 10.34 8.66 9 7 9ZM17 9C15.34 9 14 10.34 14 12C14 13.66 15.34 15 17 15C18.66 15 20 13.66 20 12C20 10.34 18.66 9 17 9ZM12 14C9.24 14 7 16.24 7 19C7 21.21 8.79 24 11 24H13C15.21 24 17 21.21 17 19C17 16.24 14.76 14 12 14Z"/></svg>') 12 12, pointer !important;
         }
 
         /* 테마 변경 버튼 스타일 */
@@ -173,6 +180,25 @@
 
         .card:hover {
             transform: translateY(-8px);
+        }
+
+        /* 나란히 배치되는 이미지 레이아웃 */
+        .image-row {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 24px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .image-row img {
+            width: calc(50% - 6px);
+            border-radius: 12px;
+            object-fit: cover;
+            aspect-ratio: 1/1;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
 
         .card-icon {
@@ -327,6 +353,28 @@
         .slider-btn.prev { left: 8px; }
         .slider-btn.next { right: 8px; }
 
+        /* 페이지네이션 (Dots) 스타일 */
+        .slider-dots {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+        .slider-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.5);
+            transition: background-color 0.2s;
+        }
+        .slider-dot.active {
+            background-color: rgba(255, 255, 255, 1);
+            box-shadow: 0 0 2px rgba(0,0,0,0.5);
+        }
+
         /* 이미지 확대 모달 (Lightbox) 스타일 */
         .modal-overlay {
             display: none;
@@ -389,10 +437,10 @@
             }
             .hero h1 {
                 font-size: 1.75rem;
-                margin-top: 20px; /* 버튼과 겹치지 않게 여백 추가 */
+                margin-top: 32px; /* 버튼과 겹치지 않게 여백 추가 */
             }
             .hero {
-                padding: 100px 24px;
+                padding: 100px 20px 60px; /* 모바일용 여백 축소 */
                 border-bottom-left-radius: 24px;
                 border-bottom-right-radius: 24px;
             }
@@ -402,11 +450,35 @@
             .profile-grid {
                 flex-direction: column;
             }
+            .profile-card, .card {
+                padding: 24px 20px; /* 모바일에서 카드 여백 축소 */
+            }
+            
+            /* 모바일에서 이미지 세로로 배치 */
+            .image-row {
+                flex-direction: column;
+                align-items: center;
+            }
+            .image-row img {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .cta-box {
+                padding: 32px 20px; /* 모바일용 여백 축소 */
+            }
             .input-group {
                 flex-direction: column;
             }
             .btn {
                 width: 100%;
+            }
+            
+            /* 모바일에서 닫기 버튼 크기 및 위치 조정 */
+            .close-btn {
+                top: 10px;
+                right: 15px;
+                font-size: 32px;
             }
         }
     </style>
@@ -462,10 +534,9 @@
             <h2 class="section-title">핵심 매력 포인트 4가지</h2>
             <div class="card-grid">
                 <div class="card">
-                    <!-- 아기 때 사진 2장 크게 나란히 배치 (가운데 정렬) -->
-                    <div style="display: flex; gap: 12px; justify-content: center; margin-bottom: 24px; max-width: 500px; margin-left: auto; margin-right: auto;">
-                        <img src="images/babygroom.jpg" class="clickable-img" onclick="openModal(this.src)" alt="아기 구름이" style="width: calc(50% - 6px); border-radius: 12px; object-fit: cover; aspect-ratio: 1/1; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-                        <img src="images/babygaeul.jpg" class="clickable-img" onclick="openModal(this.src)" alt="아기 가을이" style="width: calc(50% - 6px); border-radius: 12px; object-fit: cover; aspect-ratio: 1/1; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                    <div class="image-row">
+                        <img src="images/babygroom.jpg" class="clickable-img" onclick="openModal(this.src)" alt="아기 구름이">
+                        <img src="images/babygaeul.jpg" class="clickable-img" onclick="openModal(this.src)" alt="아기 가을이">
                     </div>
                     <h3>꼬물이 시절 못생김</h3>
                     <p>지금은 천사 같지만, 꼬물거리는 아기 시절에는 털도 삐죽삐죽하고 어딘가 억울해 보이는 꼬질한 매력이 있었습니다.</p>
@@ -478,9 +549,9 @@
                 </div>
 
                 <div class="card">
-                    <div style="display: flex; gap: 12px; justify-content: center; margin-bottom: 24px; max-width: 500px; margin-left: auto; margin-right: auto;">
-                        <img src="images/groomtoy.jpg" class="clickable-img" onclick="openModal(this.src)" alt="구름이 장난감" style="width: calc(50% - 6px); border-radius: 12px; object-fit: cover; aspect-ratio: 1/1; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
-                        <img src="images/gaueltoy.jpg" class="clickable-img" onclick="openModal(this.src)" alt="가을이 장난감" style="width: calc(50% - 6px); border-radius: 12px; object-fit: cover; aspect-ratio: 1/1; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                    <div class="image-row">
+                        <img src="images/groomtoy.jpg" class="clickable-img" onclick="openModal(this.src)" alt="구름이 장난감">
+                        <img src="images/gaueltoy.jpg" class="clickable-img" onclick="openModal(this.src)" alt="가을이 장난감">
                     </div>
                     <h3>구름이의 슬리퍼 사랑/ 가을이의 인형 사랑</h3>
                     <p>구름이는 슬리퍼를 매우 좋아합니다. 모든 슬리퍼를 너무 좋아해서 결국 아주 작은 아기 전용 슬리퍼를 사줬습니다!</p>
@@ -576,11 +647,20 @@
             const track = document.createElement('div');
             track.className = 'slider-track';
             
-            images.forEach(src => {
+            // 페이지네이션(점) 컨테이너 생성
+            const dotsContainer = document.createElement('div');
+            dotsContainer.className = 'slider-dots';
+            const dots = [];
+
+            images.forEach((src, idx) => {
                 const img = document.createElement('img');
                 img.src = src;
                 img.alt = '강아지 이미지';
                 img.className = 'clickable-img';
+                
+                // 모바일 터치 이벤트 기본 동작 충돌 방지를 위해 이미지 드래그 금지
+                img.draggable = false; 
+
                 img.onclick = function() {
                     openModal(this.src);
                 };
@@ -588,6 +668,16 @@
                     this.src = 'https://placehold.co/400x300/CCCCCC/666666?text=Image+Not+Found';
                 };
                 track.appendChild(img);
+
+                // 점(Dot) 요소 생성
+                const dot = document.createElement('div');
+                dot.className = 'slider-dot' + (idx === 0 ? ' active' : '');
+                dot.onclick = () => {
+                    currentIndex = idx;
+                    updateSlider();
+                };
+                dotsContainer.appendChild(dot);
+                dots.push(dot);
             });
 
             const prevBtn = document.createElement('button');
@@ -600,6 +690,11 @@
 
             function updateSlider() {
                 track.style.transform = `translateX(-${currentIndex * 100}%)`;
+                
+                // 현재 활성화된 점 업데이트
+                dots.forEach((dot, idx) => {
+                    dot.className = 'slider-dot' + (idx === currentIndex ? ' active' : '');
+                });
             }
 
             prevBtn.onclick = () => {
@@ -612,9 +707,40 @@
                 updateSlider();
             };
 
+            // 모바일 터치 스와이프 기능 추가
+            let startX = 0;
+            let endX = 0;
+
+            track.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+            }, { passive: true });
+
+            track.addEventListener('touchmove', (e) => {
+                endX = e.touches[0].clientX;
+            }, { passive: true });
+
+            track.addEventListener('touchend', () => {
+                if (startX === 0 || endX === 0) return;
+                const diffX = startX - endX;
+
+                // 50px 이상 밀었을 때 전환
+                if (diffX > 50) { 
+                    currentIndex = (currentIndex < images.length - 1) ? currentIndex + 1 : 0;
+                    updateSlider();
+                } else if (diffX < -50) { 
+                    currentIndex = (currentIndex > 0) ? currentIndex - 1 : images.length - 1;
+                    updateSlider();
+                }
+
+                // 초기화
+                startX = 0;
+                endX = 0;
+            });
+
             container.appendChild(track);
             container.appendChild(prevBtn);
             container.appendChild(nextBtn);
+            container.appendChild(dotsContainer); // 컨테이너에 점 추가
         }
 
         window.onload = function() {
